@@ -1,0 +1,10 @@
+.env
+node_modules/
+dist/
+.next/
+.nuxt/
+.turbo/
+coverage/
+*.log
+.DS_Store
+docker-compose.override.yml

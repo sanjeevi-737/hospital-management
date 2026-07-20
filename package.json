@@ -1,0 +1,20 @@
+{
+  "name": "medcore-hms",
+  "version": "1.0.0",
+  "description": "MedCore Hospital Management System - MERN Stack",
+  "private": true,
+  "scripts": {
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:start": "cd server && npm start",
+    "client:build": "cd client && npm run build",
+    "seed": "cd server && npm run seed",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose up -d --build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
