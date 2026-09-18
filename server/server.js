@@ -10,6 +10,7 @@ const morgan = require("morgan");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const { apiLimiter } = require("./middleware/rateLimiter");
+const auditLog = require("./middleware/audit");
 const { initSocket } = require("./socket");
 
 const app = express();
@@ -50,6 +51,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting
 app.use("/api/", apiLimiter);
+
+// Audit logging for authenticated mutations
+app.use("/api", auditLog);
 
 // Routes
 app.use("/api/auth", require("./routes/auth"));

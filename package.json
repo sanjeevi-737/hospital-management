@@ -12,7 +12,10 @@
     "seed": "cd server && npm run seed",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:build": "docker-compose up -d --build"
+    "docker:build": "docker-compose up -d --build",
+    "lint": "npm run lint:server && npm run lint:client",
+    "lint:server": "node scripts/check-server.js",
+    "lint:client": "cd client && tsc --noEmit"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

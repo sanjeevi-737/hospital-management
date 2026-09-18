@@ -1,4 +1,5 @@
 import React from "react";
+import { HeartPulse } from "lucide-react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/auth-store";
 import DashboardLayout from "@/layouts/DashboardLayout";
@@ -45,7 +46,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
         <div className="max-w-md text-center">
           <div className="flex items-center justify-center mb-6">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary">
-              <span className="text-primary-foreground text-3xl">♥</span>
+              <HeartPulse className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
           <h1 className="text-3xl font-bold mb-4">MedCore HMS</h1>

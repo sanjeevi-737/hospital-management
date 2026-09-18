@@ -9,7 +9,7 @@ const METHOD_ACTION_MAP = {
 
 function extractEntity(url) {
   const parts = url.split("/").filter(Boolean);
-  const apiIndex = parts.findIndex((p) => p === "v1");
+  const apiIndex = parts.findIndex((p) => p === "api");
   if (apiIndex !== -1 && parts[apiIndex + 1]) {
     return parts[apiIndex + 1];
   }
@@ -20,6 +20,8 @@ const auditLog = (req, res, next) => {
   const action = METHOD_ACTION_MAP[req.method];
   if (!action) return next();
 
+  if (!req.user) return next();
+
   const entity = extractEntity(req.originalUrl);
 
   const originalJson = res.json.bind(res);
@@ -28,11 +30,9 @@ const auditLog = (req, res, next) => {
 
     const data = body && body.data ? body.data : body;
 
-    const entityId =
-      (data && (data._id || data.id)) ||
-      req.params.id ||
-      (data && typeof data === "object" && data.message ? undefined) ||
-      null;
+    let entityId = data && (data._id || data.id);
+    if (!entityId) entityId = req.params.id;
+    entityId = entityId ? String(entityId) : undefined;
 
     const logData = {
       userId: req.user?._id,
