@@ -1,11 +1,6 @@
 import React from "react";
-import { HeartPulse } from "lucide-react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore } from "@/stores/auth-store";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import DashboardPage from "@/pages/DashboardPage";
 import PatientsPage from "@/pages/patients/PatientsPage";
 import NewPatientPage from "@/pages/patients/NewPatientPage";
@@ -27,300 +22,169 @@ import NotificationsPage from "@/pages/notifications/NotificationsPage";
 import SettingsPage from "@/pages/SettingsPage";
 import AnalyticsPage from "@/pages/AnalyticsPage";
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
-  return <>{children}</>;
-}
-
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
-  return <>{children}</>;
-}
-
-function AuthLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen flex">
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary/20 to-primary/5 items-center justify-center p-12">
-        <div className="max-w-md text-center">
-          <div className="flex items-center justify-center mb-6">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary">
-              <HeartPulse className="h-8 w-8 text-primary-foreground" />
-            </div>
-          </div>
-          <h1 className="text-3xl font-bold mb-4">MedCore HMS</h1>
-          <p className="text-muted-foreground text-lg">
-            Enterprise Hospital Management System for modern healthcare facilities.
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
-            <div className="rounded-lg bg-background/60 p-4 backdrop-blur">
-              <p className="text-2xl font-bold text-primary">500+</p>
-              <p className="text-muted-foreground">Healthcare Professionals</p>
-            </div>
-            <div className="rounded-lg bg-background/60 p-4 backdrop-blur">
-              <p className="text-2xl font-bold text-primary">50K+</p>
-              <p className="text-muted-foreground">Patients Managed</p>
-            </div>
-            <div className="rounded-lg bg-background/60 p-4 backdrop-blur">
-              <p className="text-2xl font-bold text-primary">99.9%</p>
-              <p className="text-muted-foreground">System Uptime</p>
-            </div>
-            <div className="rounded-lg bg-background/60 p-4 backdrop-blur">
-              <p className="text-2xl font-bold text-primary">24/7</p>
-              <p className="text-muted-foreground">Support Available</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-1 items-center justify-center p-6">
-        <div className="w-full max-w-md">{children}</div>
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Navigate to="/dashboard" replace />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <AuthLayout>
-              <LoginPage />
-            </AuthLayout>
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <AuthLayout>
-              <RegisterPage />
-            </AuthLayout>
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/forgot-password"
-        element={
-          <PublicRoute>
-            <AuthLayout>
-              <ForgotPasswordPage />
-            </AuthLayout>
-          </PublicRoute>
-        }
-      />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <DashboardPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <DashboardPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/patients"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <PatientsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <PatientsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/patients/new"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <NewPatientPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <NewPatientPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/patients/:id"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <PatientDetailPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <PatientDetailPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/doctors"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <DoctorsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <DoctorsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/doctors/:id"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <DoctorDetailPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <DoctorDetailPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/appointments"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <AppointmentsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <AppointmentsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/appointments/new"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <NewAppointmentPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <NewAppointmentPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/departments"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <DepartmentsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <DepartmentsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/medical-records"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <MedicalRecordsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <MedicalRecordsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/medical-records/:id"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <MedicalRecordDetailPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <MedicalRecordDetailPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/prescriptions"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <PrescriptionsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <PrescriptionsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/pharmacy"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <PharmacyPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <PharmacyPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/laboratory"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <LaboratoryPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <LaboratoryPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/laboratory/:id"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <LabDetailPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <LabDetailPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/billing"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <BillingPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <BillingPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/billing/:id"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <InvoiceDetailPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <InvoiceDetailPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/notifications"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <NotificationsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <NotificationsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/settings"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <SettingsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <SettingsPage />
+          </DashboardLayout>
         }
       />
       <Route
         path="/analytics"
         element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <AnalyticsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
+          <DashboardLayout>
+            <AnalyticsPage />
+          </DashboardLayout>
         }
       />
 

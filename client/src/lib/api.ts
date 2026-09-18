@@ -22,37 +22,7 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      const refreshToken = useAuthStore.getState().refreshToken;
-
-      if (refreshToken) {
-        try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/auth/refresh`,
-            { refreshToken }
-          );
-          const { accessToken, refreshToken: newRefreshToken } = response.data.data;
-          useAuthStore.getState().setToken(accessToken);
-          useAuthStore.getState().setRefreshToken(newRefreshToken);
-
-          if (originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-          }
-          return api(originalRequest);
-        } catch {
-          useAuthStore.getState().logout();
-          window.location.href = "/login";
-        }
-      } else {
-        useAuthStore.getState().logout();
-        window.location.href = "/login";
-      }
-    }
-
+  (error: AxiosError) => {
     const message =
       (error.response?.data as { message?: string })?.message ||
       error.message ||

@@ -28,7 +28,6 @@ export function Topbar() {
 
   const handleLogout = () => {
     logout();
-    router(ROUTES.LOGIN);
   };
 
   return (

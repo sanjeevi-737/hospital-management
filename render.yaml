@@ -22,3 +22,5 @@ services:
         value: https://hospital-management-lime-phi.vercel.app
       - key: CLIENT_URL
         value: https://hospital-management-lime-phi.vercel.app
+      - key: DEMO_MODE
+        value: true

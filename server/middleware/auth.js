@@ -12,6 +12,17 @@ const protect = async (req, res, next) => {
   }
 
   if (!token) {
+    if (process.env.DEMO_MODE === "true") {
+      const demoUser = await User.findOne({ role: "SUPER_ADMIN" }).select(
+        "-password -refreshToken"
+      );
+      if (demoUser) {
+        req.user = demoUser;
+        req.userSub = demoUser._id.toString();
+        return next();
+      }
+      return ApiResponse.error(res, "Demo mode requires a seeded superadmin user", 500);
+    }
     return ApiResponse.error(res, "Not authorized, no token", 401);
   }
 
